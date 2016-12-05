@@ -1,6 +1,9 @@
 \documentclass[11pt]{article}
 \input{preamble}
 
+% Add your bibtex library here
+\addbibresource{master-refs.bib}}
+
 
 \begin{document}
 \renewcommand{\headrulewidth}{0.5pt}
@@ -67,15 +70,15 @@ The XML contains an alignment of 36 randomly simulated DNA sequences.
 While we can open the XML file in any standard text editor, BEAUTi offers an easy way to inspect the different elements of the analysis: 
 
 \begin{framed}
-Open BEAUti and load in the \textbf{tutorial\_run1.xml} file by navigating to \mi{File\textrightarrow Load}.
+Open BEAUti and load in the \textbf{tutorial\_run1.xml} file by navigating to \textbf{File\textrightarrow Load}.
 \end{framed}
 
-By navigating between the different tabs at the top of the application window, we can inspect the data and each element of the analysis. For example, in the \mi{Site Model} panel, we can see that we are fitting a GTR substitution model with no gamma rate heterogeneity \ref{fig:beauti_run1}.
+By navigating between the different tabs at the top of the application window, we can inspect the data and each element of the analysis. For example, in the \textbf{Site Model} panel, we can see that we are fitting a GTR substitution model with no gamma rate heterogeneity \ref{fig:beauti_run1}.
 
 \begin{figure}[!h]
 \centering
 \fbox{\includegraphics[scale=0.7]{figures/beauti_run1}}
-\caption{\small The \mi{Site Model} panel in BEAUTi}
+\caption{\small The \textbf{Site Model} panel in BEAUTi}
 \label{fig:beauti_run1}
 \end{figure}
 
@@ -85,12 +88,12 @@ By navigating between the different tabs at the top of the application window, w
 We are now ready to run our first analysis in BEAST.
 
 \begin{framed}
-Open BEAST and choose \textbf{tutorial\_run1.xml} as the BEAST XML File. Then click \mi{Run}.
+Open BEAST and choose \textbf{tutorial\_run1.xml} as the BEAST XML File. Then click \textbf{Run}.
 \end{framed}
 
 \begin{figure}[!h]
 \centering
-\fbox{\includegraphics[scale=0.4]{figures/beast_input_run1}}
+\includegraphics[scale=0.4]{figures/beast_input_run1}
 \caption{\small Running BEAST with a user-specified random number seed.}
 \label{fig:beast_run1}
 \end{figure}
@@ -101,12 +104,12 @@ If you set the random number seed to 1985, you should be able to reproduce my re
 \subsubsection{Visualizing BEAST's output in Tracer}
 
 \begin{framed}
-Open Tracer and navigate to \mi{File\textrightarrow Import Trace File}, then open \textbf{tutorial\_run1.log}
+Open Tracer and navigate to \textbf{File\textrightarrow Import Trace File}, then open \textbf{tutorial\_run1.log}
 \end{framed}
 
 Tracer allows us to quickly visualize BEAST's MCMC output in order to check performance and see our parameter estimates. On the left there is a panel where all model parameters are listed along with their mean posterior estimates and Effective Sample Size (ESS). Recall that the ESS tells us how many pseudo-independent samples we have from the posterior, so the higher the better. Here, we can see that the ESS is low for all parameters, indicating that we do not yet have a good estimate of the posterior distribution.
 
-By selecting a parameter in the left panel and then clicking on the \mi{Trace} tab, we can see how the MCMC explored parameter space \ref{fig:tracer_run1}. For the clockRate parameter for instance, we see that the chain quickly converged to a value of about 0.01 (the true value used to simulate the sequence data), but mixing was poor, hence the low ESS. 
+By selecting a parameter in the left panel and then clicking on the \textbf{Trace} tab, we can see how the MCMC explored parameter space \ref{fig:tracer_run1}. For the clockRate parameter for instance, we see that the chain quickly converged to a value of about 0.01 (the true value used to simulate the sequence data), but mixing was poor, hence the low ESS. 
 
 \begin{figure}[!h]
 \centering
@@ -115,7 +118,7 @@ By selecting a parameter in the left panel and then clicking on the \mi{Trace} t
 \label{fig:tracer_run1}
 \end{figure}
 
-We can also be see our posterior estimates for each parameter by clicking on the \mi{Estimates} tab while highlighting the desired parameter in the left panel. This provides us with various summary statistics and a frequency histogram representing our estimate of the posterior distribution constructed from our MCMC samples. For the clockRate parameter, we can see that our estimate of the posterior is extremely rough, again because we have so few uncorrelated samples from the posterior \ref{fig:tracer_run1_ests}.
+We can also be see our posterior estimates for each parameter by clicking on the \textbf{Estimates} tab while highlighting the desired parameter in the left panel. This provides us with various summary statistics and a frequency histogram representing our estimate of the posterior distribution constructed from our MCMC samples. For the clockRate parameter, we can see that our estimate of the posterior is extremely rough, again because we have so few uncorrelated samples from the posterior \ref{fig:tracer_run1_ests}.
 
 \begin{figure}[!h]
 \centering
@@ -130,7 +133,7 @@ We can also be see our posterior estimates for each parameter by clicking on the
 By checking the ESS, trace plots and parameter estimates, we got the picture that none of our parameters in Run 1 mixed well. In this case, the simplest thing to try is to rerun the MCMC for more iterations.
 
 \begin{framed}
-Load the \textbf{tutorial\_run1.xml} back into BEAUti using \mi{File\textrightarrow Load}. Navigate to the MCMC panel and increase the chain length to 1 million \label{fig:beauti_run2}. You may also want to change the File Name for the log file to tutorial\_run2.log so we do not overwrite our previous results. When done, navigate \mi{File\textrightarrow Save As} and save as \textbf{tutorial\_run2.xml}.
+Load the \textbf{tutorial\_run1.xml} back into BEAUti using \textbf{File\textrightarrow Load}. Navigate to the MCMC panel and increase the chain length to 1 million \label{fig:beauti_run2}. You may also want to change the File Name for the log file to tutorial\_run2.log so we do not overwrite our previous results. When done, navigate \textbf{File\textrightarrow Save As} and save as \textbf{tutorial\_run2.xml}.
 \end{framed}
 
 \begin{framed}
@@ -159,7 +162,7 @@ Looking at the MCMC output in Tracer, we see that that increasing the chain leng
 If one parameter in particular is not converging or mixing well, we can try to tweak that parameter's operator(s). Remember that BEAST's operators control what new parameters are proposed at each MCMC iteration and how these proposals are made (i.e. the proposal distribution). Since the clockRate parameter was not mixing well in Run 2, we will try increasing the frequency at which new clockRates are proposed.
 
 \begin{framed}
-Load the \textbf{tutorial\_run2.xml} back into BEAUti and select \mi{View \textrightarrow Show Operators panel}. This will bring up a new panel showing all the operators in use \ref{fig:beauti_run3}. Click on the black triangle next to Scale:clockRate. In the menu that drops down, check Optimize. In the box to the right of Scale.clockRate, change the value from 0.1 to 3.0. Now navigate to the MCMC panel and change the File Name for the log file to tutorial\_run3.log. When done, save as \textbf{tutorial\_run3.xml}.
+Load the \textbf{tutorial\_run2.xml} back into BEAUti and select \textbf{View \textrightarrow Show Operators panel}. This will bring up a new panel showing all the operators in use \ref{fig:beauti_run3}. Click on the black triangle next to Scale:clockRate. In the menu that drops down, check Optimize. In the box to the right of Scale.clockRate, change the value from 0.1 to 3.0. Now navigate to the MCMC panel and change the File Name for the log file to tutorial\_run3.log. When done, save as \textbf{tutorial\_run3.xml}.
 \end{framed}
 
 \begin{figure}[!h]
@@ -186,7 +189,7 @@ We can see that optimizing the operator dramatically improves mixing for the clo
 \label{fig:tracer_run3}
 \end{figure} 
 
-One thing to keep in mind is that BEAST is using MCMC to explore a multidimensional parameter space, and poor mixing in one dimension can be caused by poor mixing in another dimension. This often arises because two parameters are highly correlated. We can identify these correlations in Tracer by visualizing the joint distribution of a pair of parameters together. To do this, select one parameter in the left panel and then, while holding the command key, select another. Then click on the \mi{Joint-Marginal} tab at the top. Looking at the pairwise joint distribution for TreeHeight and clockRate, we see that these two parameters are highly negatively correlated \ref{fig:tracer_run3Joint}. We therefore may want to add an operator that updates these parameters together to more efficiently explore their parameter space.
+One thing to keep in mind is that BEAST is using MCMC to explore a multidimensional parameter space, and poor mixing in one dimension can be caused by poor mixing in another dimension. This often arises because two parameters are highly correlated. We can identify these correlations in Tracer by visualizing the joint distribution of a pair of parameters together. To do this, select one parameter in the left panel and then, while holding the command key, select another. Then click on the \textbf{Joint-Marginal} tab at the top. Looking at the pairwise joint distribution for TreeHeight and clockRate, we see that these two parameters are highly negatively correlated \ref{fig:tracer_run3Joint}. We therefore may want to add an operator that updates these parameters together to more efficiently explore their parameter space.
 
 \begin{figure}[!h]
 \centering
@@ -201,7 +204,7 @@ One thing to keep in mind is that BEAST is using MCMC to explore a multidimensio
 The easiest way to improve MCMC performance when two parameters are highly negatively correlated is to add an UpDown operator. This operator scales one parameter up while scaling the other parameter down. If two parameters are highly positively, correlated we can also use this operator to scale both parameters in the same direction, up or down. 
 
 \begin{framed}
-Load the \textbf{tutorial\_run3.xml} back into BEAUti and select \mi{View \textrightarrow Show Operators panel}. Click on the black triangle next to UpDown clockRate. In the menu that drops down, check Optimize. In the box to the right, change the weight on the UpDown operator from 0.0 to 3.0. In the MCMC panel, change the File Name for the log file to tutorial\_run3.log. When done, save as \textbf{tutorial\_run4.xml}.
+Load the \textbf{tutorial\_run3.xml} back into BEAUti and select \textbf{View \textrightarrow Show Operators panel}. Click on the black triangle next to UpDown clockRate. In the menu that drops down, check Optimize. In the box to the right, change the weight on the UpDown operator from 0.0 to 3.0. In the MCMC panel, change the File Name for the log file to tutorial\_run3.log. When done, save as \textbf{tutorial\_run4.xml}.
 \end{framed}
 
 We just added an UpDown operator on the clockRate and the TreeHeight. The fact that these two parameters are highly negatively correlated makes perfect sense. An increase in the clockRate means that less time is needed for substitutions to accumulate along branches; meaning branches can be shorter and yet still explain the same amount of accumulated evolutionary change in the sequence data. If all branches in the tree become shorter, then the total TreeHeight will also decrease. Thus it makes sense to include an UpDown operator on clockRate and TreeHeight. In fact, by default BEAUTi includes this operator. However, I disabled it in the original XML file by setting the weight on this operator to zero for the purpose of illustration.
@@ -261,7 +264,7 @@ Version dated: \today
 %  REFERENCES  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\printbibliography[heading=relevref]
+\printbibliography[heading=relevref]
 
 
 
