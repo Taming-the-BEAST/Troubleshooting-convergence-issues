@@ -1,5 +1,5 @@
 ---
-author: David Rasmussen
+author: David A. Rasmussen
 beastversion: 2.4.1
 tracerversion: 1.6.1
 level: Beginner
