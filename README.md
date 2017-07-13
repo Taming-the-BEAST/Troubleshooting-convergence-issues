@@ -1,7 +1,7 @@
 ---
 author: David A. Rasmussen
 beastversion: 2.4.1
-tracerversion: 1.6.1
+tracerversion: 1.6.0
 level: Beginner
 title: Troubleshooting
 ---
@@ -110,7 +110,7 @@ By selecting a parameter in the left panel and then clicking on the **Trace** ta
 <br>
 
 
-We can also be see our posterior estimates for each parameter by clicking on the **Estimates** tab while highlighting the desired parameter in the left panel. This provides us with various summary statistics and a frequency histogram representing our estimate of the posterior distribution constructed from our MCMC samples. For the clockRate parameter, we can see that our estimate of the posterior is extremely rough, again because we have so few uncorrelated samples from the posterior ([Figure 4](#fig:tracer_run1_ests)).
+We can also see our posterior estimates for each parameter by clicking on the **Estimates** tab while highlighting the desired parameter in the left panel. This provides us with various summary statistics and a frequency histogram representing our estimate of the posterior distribution constructed from our MCMC samples. For the clockRate parameter, we can see that our estimate of the posterior is extremely rough, again because we have so few uncorrelated samples from the posterior ([Figure 4](#fig:tracer_run1_ests)).
 
 <figure>
 	<a id="fig:tracer_run1_ests"></a>
