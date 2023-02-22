@@ -1,6 +1,6 @@
 ---
-author: David A. Rasmussen
-beastversion: 2.4.1+
+author: David A. Rasmussen, Joëlle Barido-Sottani
+beastversion: 2.6.0+
 tracerversion: 1.6.0
 level: Beginner
 title: Troubleshooting
@@ -13,7 +13,7 @@ The primary goal of most phylogenetic analyses in BEAST is to infer the posterio
 
 While BEAST's MCMC algorithm is fairly well optimised for phylogenetic inference, problems can arise, especially as the complexity of our data and models increase. A MCMC run may not converge on a stationary target distribution. More commonly, a run might converge but mix poorly - meaning our samples from the posterior are highly autocorrelated and therefore not independent. In these cases, it is often necessary to tune the performance of the MCMC algorithm.
 
-In this tutorial, we will consider a relatively simple example where we would like to infer a phylogeny and evolutionary parameters from a small alignment of sequences.  Our job will be to work together to increase the efficiency of the MCMC so we can make BEAST purr...
+
 
 ----
 
@@ -38,17 +38,66 @@ Tracer ([http://tree.bio.ed.ac.uk/software/tracer](http://tree.bio.ed.ac.uk/soft
 
 ----
 
+# Practical: Troubleshooting starting issues
 
-# Practical: Getting BEAST to purr
+In this part of the tutorial, we will see several issues which can prevent a BEAST2 inference from even starting, and demonstrate how to fix them.
+
+## The Data
+
+All examples in this section are inspired by real issues encountered during the analysis of the convergent evolution of true crabs {% cite Wolfe2022 --file Troubleshooting/master-refs %}. The dataset used is composed of sequences for 344 extant species of the infraorder Brachyura, in addition to fossil calibrations or fossil samples for this clade. Note that the runs presented here have been simplified from the original, in particular many of the alignment partitions used in the original analysis have been removed.
+
+## Packages
+
+The following packages are required to run the examples: SA, CA, SSM.
+
+> Launch **BEAUti**, then open the **BEAST2 Package Manager** by navigating to **File > Manage Packages**. ([Figure 1](#packageManage1))
+> 
+
+<figure>
+	<a id="packageManage1"></a>
+	<img style="width:75.0%;" src="figures/package_manager.png" alt="">
+	<figcaption>Figure 1: Finding the BEAST2 Package Manager.</figcaption>
+</figure>
+<br>
 
 
+> Install the **CA**, **SA** and **SSM** packages by selecting them and clicking the **Install/Upgrade** button. ([Figure 2](#packageManage2))
+> 
+
+<figure>
+	<a id="packageManage2"></a>
+	<img style="width:65.0%;" src="figures/packages.png" alt="">
+	<figcaption>Figure 2: The BEAST2 Package Manager.</figcaption>
+</figure>
+<br>
+
+
+BEAUti needs to be closed for the newly installed package to be loaded properly.
+
+> Close the **BEAST2 Package Manager** and **BEAUti**.
+> 
+
+## XML parsing issue
+
+> Download the first BEAST input file `part1_xmlparsing.xml`
+> 
+
+## Issue with finding an initial state
+
+This is a much more complex issue than the previous one, as it can be caused by many different parts of the analysis configuration. However, as above the error message provides critical information on the source of the problem.
+
+## Restarting issue
+
+# Practical: Convergence issues
+
+In this part of the tutorial, we will consider a relatively simple example where we would like to infer a phylogeny and evolutionary parameters from a small alignment of sequences.  Our job will be to work together to increase the efficiency of the MCMC so we can get the analysis to converge...
 
 ## The Data
 
 To get started, I have generated a XML file that we can run our phylogenetic analysis in BEAST.
 
 
-> Download the first BEAST input file `tutorial_run1.xml`
+> Download the first BEAST input file `part2_tutorial_run1.xml`
 > 
 
 The XML contains an alignment of 36 randomly simulated DNA sequences. 
@@ -59,7 +108,7 @@ The XML contains an alignment of 36 randomly simulated DNA sequences.
 While we can open the XML file in any standard text editor, BEAUTi offers an easy way to inspect the different elements of the analysis: 
 
 
-> Open BEAUti and load in the `tutorial_run1.xml` file by navigating to **File > Load**.
+> Open BEAUti and load in the `part2_tutorial_run1.xml` file by navigating to **File > Load**.
 > 
 
 By navigating between the different tabs at the top of the application window, we can inspect the data and each element of the analysis. For example, in the **Site Model** panel, we can see that we are fitting a GTR substitution model with no gamma rate heterogeneity ([Figure 1](#fig:beauti_run1)).
@@ -78,7 +127,7 @@ By navigating between the different tabs at the top of the application window, w
 We are now ready to run our first analysis in BEAST.
 
 
-> Open BEAST and choose `tutorial_run1.xml` as the BEAST XML file. Then click **Run**.
+> Open BEAST and choose `part2_tutorial_run1.xml` as the BEAST XML file. Then click **Run**.
 > 
 
 <figure>
@@ -94,7 +143,7 @@ Since we are only running 200,000 iterations, the MCMC should finish running in 
 ### Visualizing BEAST's output in Tracer
 
 
-> Open Tracer and navigate to **File > Import Trace File**, then open `tutorial_run1.log`
+> Open Tracer and navigate to **File > Import Trace File**, then open `part2_tutorial_run1.log`
 > 
 
 The results of your run will look similar, but not necessarily identical, to my results shown in [Figure 2](#fig:beast_run1).
@@ -127,11 +176,11 @@ We can also see our posterior estimates for each parameter by clicking on the **
 By checking the ESS, trace plots and parameter estimates, we got the picture that none of our parameters in Run 1 mixed well. In this case, the simplest thing to try is to rerun the MCMC for more iterations.
 
 
-> Load the `tutorial_run1.xml` back into BEAUti using **File > Load**. Navigate to the MCMC panel and increase the chain length to 1 million. You may also want to change the file name for the log file to `tutorial_run2.log` and to `tutorial_run2.trees` for the tree file so we do not overwrite our previous results. When done, navigate **File > Save As** and save as `tutorial_run2.xml`.
+> Load the `part2_tutorial_run1.xml` back into BEAUti using **File > Load**. Navigate to the MCMC panel and increase the chain length to 1 million. You may also want to change the file name for the log file to `part2_tutorial_run2.log` and to `part2_tutorial_run2.trees` for the tree file so we do not overwrite our previous results. When done, navigate **File > Save As** and save as `part2_tutorial_run2.xml`.
 > 
 
 
-> Run the `tutorial_run2.xml` file in BEAST as we did before. When done, open the `tutorial_run2.log` in Tracer.
+> Run the `part2_tutorial_run2.xml` file in BEAST as we did before. When done, open the `part2_tutorial_run2.log` in Tracer.
 > 
 
 <figure>
@@ -158,7 +207,7 @@ Looking at the MCMC output in Tracer, we see that that increasing the chain leng
 If one parameter in particular is not converging or mixing well, we can try to tweak that parameter's operator(s). Remember that BEAST's operators control what new parameter values are proposed at each MCMC iteration and how these proposals are made (i.e. the proposal distribution). Since the **clockRate** parameter was not mixing well in Run 2, we will try increasing the frequency at which new **clockRates** are proposed.
 
 
-> Load the `tutorial_run2.xml` back into BEAUti and select `View > Show Operators` panel. This will bring up a new panel showing all the operators in use ([Figure 7](#fig:beauti_run3)). Click on the black triangle next to `Scale:clockRate`. In the menu that drops down, check **Optimise**. In the box to the right of `Scale.clockRate`, change the value from **0.1** to **3.0**. Now navigate to the MCMC panel and change the file name for the log file to `tutorial_run3.log` and the tree file to `tutorial_run3.trees`. When done, save as `tutorial_run3.xml`.
+> Load the `part2_tutorial_run2.xml` back into BEAUti and select `View > Show Operators` panel. This will bring up a new panel showing all the operators in use ([Figure 7](#fig:beauti_run3)). Click on the black triangle next to `Scale:clockRate`. In the menu that drops down, check **Optimise**. In the box to the right of `Scale.clockRate`, change the value from **0.1** to **3.0**. Now navigate to the MCMC panel and change the file name for the log file to `part2_tutorial_run3.log` and the tree file to `part2_tutorial_run3.trees`. When done, save as `part2_tutorial_run3.xml`.
 > 
 
 <figure>
@@ -173,7 +222,7 @@ So, what just happened? We told BEAST to try to automatically optimise the scale
 
 
 
-> Run the `tutorial_run3.xml` in BEAST and then open the `tutorial_run3.log` in Tracer.
+> Run the `part2_tutorial_run3.xml` in BEAST and then open the `part2_tutorial_run3.log` in Tracer.
 > 
 
 We can see that optimizing the operator dramatically improves mixing for the **clockRate** ([Figure 8](#fig:tracer_run3)). But there is still room for improvement.
@@ -202,13 +251,13 @@ One thing to keep in mind is that BEAST is using MCMC to explore a multidimensio
 The easiest way to improve MCMC performance when two parameters are highly negatively correlated is to add an **UpDown** operator. This operator scales one parameter up while scaling the other parameter down. If two parameters are highly positively correlated we can also use this operator to scale both parameters in the same direction, up or down. 
 
 
-> Load the `tutorial_run3.xml` back into BEAUti and select `View > Show Operators` panel. Click on the black triangle next to **UpDown clockRate**. In the menu that drops down, check **Optimise**. In the box to the right, change the weight on the UpDown operator from **0.0** to **3.0**. In the MCMC panel, change the file name for the log file to `tutorial_run4.log` and the tree file to `tutorial_run4.trees`. When done, save as tutorial_run4.xml`.
+> Load the `part2_tutorial_run3.xml` back into BEAUti and select `View > Show Operators` panel. Click on the black triangle next to **UpDown clockRate**. In the menu that drops down, check **Optimise**. In the box to the right, change the weight on the UpDown operator from **0.0** to **3.0**. In the MCMC panel, change the file name for the log file to `part2_tutorial_run4.log` and the tree file to `part2_tutorial_run4.trees`. When done, save as part2_tutorial_run4.xml`.
 > 
 
 We just added an **UpDown** operator on the **clockRate** and the **TreeHeight**. The fact that these two parameters are highly negatively correlated makes perfect sense. An increase in the **clockRate** means that less time is needed for substitutions to accumulate along branches; meaning branches can be shorter and yet still explain the same amount of accumulated evolutionary change in the sequence data. If all branches in the tree become shorter, then the total **TreeHeight** will also decrease. Thus it makes sense to include an **UpDown** operator on **clockRate** and **TreeHeight**. In fact, by default BEAUTi includes this operator. However, I disabled it in the original XML file by setting the weight on this operator to zero for the purpose of illustration.
 
 
-> Run the `tutorial_run4.xml` in BEAST and then open the `tutorial_run4.log` in Tracer.
+> Run the `part2_tutorial_run4.xml` in BEAST and then open the `part2_tutorial_run4.log` in Tracer.
 > 
 
 Looking at the MCMC output in Tracer, we see that all parameters are starting to mix well with relatively high ESS values. Personally, I would probably want to run one final MCMC for several million iterations just to be on the safe side, but this can easily be done by adding more iterations to the chain as we did for Run 2.  Alternatively, multiple different MCMC runs can be combined using the program LogCombiner that comes packaged with BEAST. This may be better than running one single long analysis, as it allows us to be sure independent runs are converging on similar parameters.  
@@ -230,6 +279,9 @@ Looking at the MCMC output in Tracer, we see that all parameters are starting to
 -  It is always a good idea to check your posterior estimates against sampling from the prior.  
 
 
+### Bonus: troubleshooting a complex analysis
+
+In this tutorial, we have used a toy example, but it is important to keep in mind that real analyses may be much more complex.
 
 # Useful Links
 

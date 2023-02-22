@@ -196,7 +196,7 @@ name="alignment">
 
     <operator id="RateGTScaler.s:seqs" spec="ScaleOperator" parameter="@rateGT.s:seqs" scaleFactor="0.5" weight="0.1"/>
 
-    <operator id="StrictClockRateScaler.c:seqs" spec="ScaleOperator" optimise="false" parameter="@clockRate.c:seqs" scaleFactor="0.75" weight="0.1"/>
+    <operator id="StrictClockRateScaler.c:seqs" spec="ScaleOperator" parameter="@clockRate.c:seqs" scaleFactor="0.75" weight="3.0"/>
 
     <operator id="strictClockUpDownOperator.c:seqs" spec="UpDownOperator" optimise="false" scaleFactor="0.75" weight="0.0">
         <up idref="clockRate.c:seqs"/>
@@ -219,7 +219,7 @@ name="alignment">
 
     <operator id="PopSizeScaler.t:seqs" spec="ScaleOperator" parameter="@popSize.t:seqs" scaleFactor="0.75" weight="3.0"/>
 
-    <logger id="tracelog" fileName="tutorial_run2.log" logEvery="1000" model="@posterior" sanitiseHeaders="true" sort="smart">
+    <logger id="tracelog" fileName="part2_tutorial_run3.log" logEvery="1000" model="@posterior" sanitiseHeaders="true" sort="smart">
         <log idref="posterior"/>
         <log idref="likelihood"/>
         <log idref="prior"/>
@@ -243,7 +243,7 @@ name="alignment">
         <log idref="prior"/>
     </logger>
 
-    <logger id="treelog.t:seqs" fileName="tutorial_run2.trees" logEvery="10000" mode="tree">
+    <logger id="treelog.t:seqs" fileName="part2_tutorial_run3.trees" logEvery="1000" mode="tree">
         <log id="TreeWithMetaDataLogger.t:seqs" spec="beast.evolution.tree.TreeWithMetaDataLogger" tree="@Tree.t:seqs"/>
     </logger>
 

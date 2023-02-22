@@ -62,10 +62,11 @@ name="alignment">
 <map name="OneOnX" >beast.math.distributions.OneOnX</map>
 
 
-<run id="mcmc" spec="MCMC" chainLength="200000">
+<run id="mcmc" spec="MCMC" chainLength="1000000">
     <state id="state" storeEvery="5000">
         <tree id="Tree.t:seqs" name="stateNode">
             <trait id="dateTrait.t:seqs" spec="beast.evolution.tree.TraitSet" traitname="date">
+                
                 23_6.2291=6.2291,
 6_9.0418=9.0418,
 3_9.2292=9.2292,
@@ -101,13 +102,13 @@ name="alignment">
 18_6.8896=6.8896,
 16_7.2114=7.2114,
 13_7.7576=7.7576,
-8_8.6063=8.6063                <taxa id="TaxonSet.seqs" spec="TaxonSet">
+8_8.6063=8.6063                
+                            <taxa id="TaxonSet.seqs" spec="TaxonSet">
                     <alignment idref="seqs"/>
                 </taxa>
             </trait>
             <taxonset idref="TaxonSet.seqs"/>
         </tree>
-        <parameter id="freqParameter.s:seqs" dimension="4" lower="0.0" name="stateNode" upper="1.0">0.25</parameter>
         <parameter id="rateAC.s:seqs" lower="0.0" name="stateNode">1.0</parameter>
         <parameter id="rateAG.s:seqs" lower="0.0" name="stateNode">1.0</parameter>
         <parameter id="rateAT.s:seqs" lower="0.0" name="stateNode">1.0</parameter>
@@ -115,6 +116,7 @@ name="alignment">
         <parameter id="rateGT.s:seqs" lower="0.0" name="stateNode">1.0</parameter>
         <parameter id="clockRate.c:seqs" lower="0.0" name="stateNode">0.1</parameter>
         <parameter id="popSize.t:seqs" lower="0.0" name="stateNode">0.3</parameter>
+        <parameter id="freqParameter.s:seqs" dimension="4" lower="0.0" name="stateNode" upper="1.0">0.25</parameter>
     </state>
 
     <init id="RandomTree.t:seqs" spec="beast.evolution.tree.RandomTree" estimate="false" initial="@Tree.t:seqs" taxa="@seqs">
@@ -182,10 +184,6 @@ name="alignment">
         </distribution>
     </distribution>
 
-    <operator id="FrequenciesExchanger.s:seqs" spec="DeltaExchangeOperator" delta="0.01" weight="0.1">
-        <parameter idref="freqParameter.s:seqs"/>
-    </operator>
-
     <operator id="RateACScaler.s:seqs" spec="ScaleOperator" parameter="@rateAC.s:seqs" scaleFactor="0.5" weight="0.1"/>
 
     <operator id="RateAGScaler.s:seqs" spec="ScaleOperator" parameter="@rateAG.s:seqs" scaleFactor="0.5" weight="0.1"/>
@@ -196,9 +194,9 @@ name="alignment">
 
     <operator id="RateGTScaler.s:seqs" spec="ScaleOperator" parameter="@rateGT.s:seqs" scaleFactor="0.5" weight="0.1"/>
 
-    <operator id="StrictClockRateScaler.c:seqs" spec="ScaleOperator" optimise="false" parameter="@clockRate.c:seqs" scaleFactor="0.75" weight="0.1"/>
+    <operator id="StrictClockRateScaler.c:seqs" spec="ScaleOperator" parameter="@clockRate.c:seqs" scaleFactor="0.75" weight="3.0"/>
 
-    <operator id="strictClockUpDownOperator.c:seqs" spec="UpDownOperator" optimise="false" scaleFactor="0.75" weight="0.0">
+    <operator id="strictClockUpDownOperator.c:seqs" spec="UpDownOperator" scaleFactor="0.75" weight="3.0">
         <up idref="clockRate.c:seqs"/>
         <down idref="Tree.t:seqs"/>
     </operator>
@@ -219,14 +217,17 @@ name="alignment">
 
     <operator id="PopSizeScaler.t:seqs" spec="ScaleOperator" parameter="@popSize.t:seqs" scaleFactor="0.75" weight="3.0"/>
 
-    <logger id="tracelog" fileName="tutorial_run1.log" logEvery="1000" model="@posterior" sanitiseHeaders="true" sort="smart">
+    <operator id="FrequenciesExchanger.s:seqs" spec="DeltaExchangeOperator" delta="0.01" weight="0.1">
+        <parameter idref="freqParameter.s:seqs"/>
+    </operator>
+
+    <logger id="tracelog" fileName="part2_tutorial_run4.log" logEvery="1000" model="@posterior" sanitiseHeaders="true" sort="smart">
         <log idref="posterior"/>
         <log idref="likelihood"/>
         <log idref="prior"/>
         <log idref="treeLikelihood.seqs"/>
         <log id="TreeHeight.t:seqs" spec="beast.evolution.tree.TreeHeightLogger" tree="@Tree.t:seqs"/>
         <log idref="clockRate.c:seqs"/>
-        <log idref="freqParameter.s:seqs"/>
         <log idref="rateAC.s:seqs"/>
         <log idref="rateAG.s:seqs"/>
         <log idref="rateAT.s:seqs"/>
@@ -234,6 +235,7 @@ name="alignment">
         <log idref="rateGT.s:seqs"/>
         <log idref="popSize.t:seqs"/>
         <log idref="CoalescentConstant.t:seqs"/>
+        <log idref="freqParameter.s:seqs"/>
     </logger>
 
     <logger id="screenlog" logEvery="1000">
@@ -243,7 +245,7 @@ name="alignment">
         <log idref="prior"/>
     </logger>
 
-    <logger id="treelog.t:seqs" fileName="tutorial_run1.trees" logEvery="10000" mode="tree">
+    <logger id="treelog.t:seqs" fileName="part2_tutorial_run4.trees" logEvery="1000" mode="tree">
         <log id="TreeWithMetaDataLogger.t:seqs" spec="beast.evolution.tree.TreeWithMetaDataLogger" tree="@Tree.t:seqs"/>
     </logger>
 
