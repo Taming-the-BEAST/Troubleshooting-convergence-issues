@@ -826,7 +826,7 @@ name="alignment">
     <operator id="SATreeScalerFBD.t:concat" spec="SAScaleOperator" scaleFactor="0.95" tree="@Tree.t:concat" weight="3.0"/>
 
 
-    <logger id="tracelog" spec="Logger" fileName="test.log" logEvery="1000" model="@posterior" sanitiseHeaders="true" sort="smart">
+    <logger id="tracelog" spec="Logger" fileName="part1_2.log" logEvery="1000" model="@posterior" sanitiseHeaders="true" sort="smart">
         <log idref="posterior"/>
         <log idref="likelihood"/>
         <log idref="prior"/>
@@ -850,7 +850,7 @@ name="alignment">
         <log idref="prior"/>
     </logger>
 
-    <logger id="treelog.t:concat" spec="Logger" fileName="$(tree).trees" logEvery="100" mode="tree">
+    <logger id="treelog.t:concat" spec="Logger" fileName="part1_2.trees" logEvery="100" mode="tree">
         <log id="TreeWithMetaDataLogger.t:concat" spec="beast.evolution.tree.TreeWithMetaDataLogger" branchratemodel="@RelaxedClock.c:12S" tree="@Tree.t:concat"/>
     </logger>
 
