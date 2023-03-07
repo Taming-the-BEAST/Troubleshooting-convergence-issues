@@ -55,7 +55,7 @@ The following packages are required to run the examples: SA, CA, SSM.
 
 <figure>
 	<a id="packageManage1"></a>
-	<img style="width:75.0%;" src="figures/package_manager.png" alt="">
+	<img style="width:80.0%;" src="figures/package_manager.png" alt="">
 	<figcaption>Figure 1: Finding the BEAST2 Package Manager.</figcaption>
 </figure>
 <br>
@@ -66,7 +66,7 @@ The following packages are required to run the examples: SA, CA, SSM.
 
 <figure>
 	<a id="packageManage2"></a>
-	<img style="width:65.0%;" src="figures/packages.png" alt="">
+	<img style="width:70.0%;" src="figures/packages.png" alt="">
 	<figcaption>Figure 2: The BEAST2 Package Manager.</figcaption>
 </figure>
 <br>
@@ -86,7 +86,7 @@ BEAUti needs to be closed for the newly installed packages to be loaded properly
 
 <figure>
 	<a id="errorParsing"></a>
-	<img style="width:65.0%;" src="figures/error_xml.png" alt="">
+	<img style="width:80.0%;" src="figures/error_xml.png" alt="">
 	<figcaption>Figure 3: Error message in BEAST2.</figcaption>
 </figure>
 <br>
@@ -102,7 +102,7 @@ By comparing to a previous (working) analysis in the file `part1_1xmlparsing_wor
 As the error message told us, the **tree** element of the configuration is missing in the non-working XML file. Putting it back allows us to start the run.
 
 > Open the file `part1_xmlparsing.xml` in a text editor.
-> Modify **line 1297** of the file to add the **tree="@Tree.t:concat"** element. Save the file as `part1_xmlparsing_fixed.xml`.
+> Modify **line 1297** of the file to add the `tree="@Tree.t:concat"` element. Save the file as `part1_xmlparsing_fixed.xml`.
 > Open **BEAST2** and select the file `part1_xmlparsing_fixed.xml` as input file. Start the run with the **Run** button.
 > Now it works!
 >
@@ -118,7 +118,7 @@ XML parsing errors usually occur when the XML file has been manually edited and 
 
 <figure>
 	<a id="errorStarting"></a>
-	<img style="width:65.0%;" src="figures/error_initial.png" alt="">
+	<img style="width:80.0%;" src="figures/error_initial.png" alt="">
 	<figcaption>Figure 4: Another error message in BEAST2.</figcaption>
 </figure>
 <br>
@@ -141,7 +141,7 @@ The starting tree can be found in the **Starting tree** panel, which is hidden b
 
 <figure>
 	<a id="startingTree"></a>
-	<img style="width:65.0%;" src="figures/startingTree.png" alt="">
+	<img style="width:80.0%;" src="figures/startingTree.png" alt="">
 	<figcaption>Figure 5: Starting tree panel.</figcaption>
 </figure>
 <br>
@@ -154,7 +154,7 @@ As we can see in [Figure 5](#startingTree), the initial tree in this analysis is
 
 <figure>
 	<a id="rootPrior"></a>
-	<img style="width:65.0%;" src="figures/rootPrior.png" alt="">
+	<img style="width:80.0%;" src="figures/rootPrior.png" alt="">
 	<figcaption>Figure 6: Priors panel showing the root prior.</figcaption>
 </figure>
 <br>
@@ -174,7 +174,7 @@ Thus we can see that the initial diversification rate is **1.0**, the initial sa
 
 <figure>
 	<a id="initialVal"></a>
-	<img style="width:65.0%;" src="figures/initialVal.png" alt="">
+	<img style="width:80.0%;" src="figures/initialVal.png" alt="">
 	<figcaption>Figure 7: Initial values in the Priors panel.</figcaption>
 </figure>
 <br>
@@ -189,7 +189,7 @@ Thus we can see that the initial diversification rate is **1.0**, the initial sa
 
 <figure>
 	<a id="initialDiv"></a>
-	<img style="width:65.0%;" src="figures/initialDiv.png" alt="">
+	<img style="width:50.0%;" src="figures/initialDiv.png" alt="">
 	<figcaption>Figure 8: Changing the initial value.</figcaption>
 </figure>
 <br>
