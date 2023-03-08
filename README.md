@@ -261,7 +261,7 @@ By selecting a parameter in the left panel and then clicking on the **Trace** ta
 <figure>
 	<a id="fig:tracer_run1"></a>
 	<img style="width:80.0%;" src="figures/tracer_run1.png" alt="">
-	<figcaption>Figure 11: A trace plot for the **clockRate** parameter</figcaption>
+	<figcaption>Figure 11: Trace plot of the clock rate parameter</figcaption>
 </figure>
 <br>
 
@@ -271,7 +271,7 @@ We can also see our posterior estimates for each parameter by clicking on the **
 <figure>
 	<a id="fig:tracer_run1_ests"></a>
 	<img style="width:80.0%;" src="figures/tracer_run1_ests.png" alt="">
-	<figcaption>Figure 12: Posterior estimates of the **clockRate** in Tracer.</figcaption>
+	<figcaption>Figure 12: Posterior estimates of the clock rate parameter in Tracer.</figcaption>
 </figure>
 <br>
 
@@ -302,7 +302,7 @@ Looking at the MCMC output in Tracer, we see that that increasing the chain leng
 <figure>
 	<a id="fig:tracer_run2"></a>
 	<img style="width:80.0%;" src="figures/tracer_run2.png" alt="">
-	<figcaption>Figure 14: A trace plot for the **clockRate** parameter</figcaption>
+	<figcaption>Figure 14: Trace plot of the clock rate parameter</figcaption>
 </figure>
 <br>
 
@@ -336,7 +336,7 @@ We can see that optimizing the operator dramatically improves mixing for the **c
 <figure>
 	<a id="fig:tracer_run3"></a>
 	<img style="width:80.0%;" src="figures/tracer_run3.png" alt="">
-	<figcaption>Figure 16: A trace plot for the **clockRate** parameter</figcaption>
+	<figcaption>Figure 16: Trace plot of the clock rate parameter</figcaption>
 </figure>
 <br>
  
@@ -346,7 +346,7 @@ One thing to keep in mind is that BEAST is using MCMC to explore a multidimensio
 <figure>
 	<a id="fig:tracer_run3Joint"></a>
 	<img style="width:80.0%;" src="figures/tracer_run3Joint.png" alt="">
-	<figcaption>Figure 17: The joint posterior distribution of **TreeHeight** and **clockRate**</figcaption>
+	<figcaption>Figure 17: Joint posterior distribution of the tree height and clock rate</figcaption>
 </figure>
 <br>
 
@@ -371,7 +371,7 @@ Looking at the MCMC output in Tracer, we see that all parameters are starting to
 <figure>
 	<a id="fig:tracer_run4"></a>
 	<img style="width:80.0%;" src="figures/tracer_run4.png" alt="">
-	<figcaption>Figure 18: A trace plot for the **clockRate** parameter</figcaption>
+	<figcaption>Figure 18: Trace plot of the clock rate parameter</figcaption>
 </figure>
 <br>
 

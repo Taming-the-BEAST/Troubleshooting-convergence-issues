@@ -111,6 +111,10 @@ signature  = "% This file was created (at least in part) by the script ParseMdto
 def getPandocCall(inputfile, outputfile, template=""):
 	call = ["pandoc"]
 
+    # Do not parse html blocks
+	call.append("--from") 
+	call.append("markdown+raw_html")
+	
 	# Output file
 	call.append("-o")
 	call.append(outputfile)
@@ -120,9 +124,6 @@ def getPandocCall(inputfile, outputfile, template=""):
 	if (template != ""):
 		call.append("--template")
 		call.append(template)
-
-	# Do not parse html blocks
-	call.append("-R")
 
 	# Use listings package for code blocks
 	call.append("--listings")
