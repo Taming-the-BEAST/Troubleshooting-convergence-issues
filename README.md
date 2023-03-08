@@ -124,9 +124,10 @@ XML parsing errors usually occur when the XML file has been manually edited and 
 <br>
 
 In this situation, the inference failed to start because a good initial state could not be found, as explained by the error message (_Fatal exception: Could not find a proper state to initialise._). This issue is much more complex to diagnose than the previous one, as it can be caused by many different parts of the analysis configuration. However, as above the error message provides some information on the source of the problem, as it details the probability of all the components of the analysis. The message reads _P(FBD.t:concat) = -Infinity_, showing that the issue likely appears in the calculation of the FBD likelihood. The FBD prior is a tree prior, and depends on the tree as well as several other parameters, so there are several possible causes for the calculation issue:
-- a bug in the likelihood calculation itself: BEAST2 packages can contain calculation issues which have been undetected so far (especially if they only appear in very specific circumstances), in which case they should be reported to the development team. However, this is unlikely in our case, as the FBD model has been extensively used without issue in previous analyses, and our analysis setup is similar to previous analyses.
-- an issue with the initial tree: the inference will not start if the provided initial tree is impossible under the specified tree model or doesn't match with the provided MRCA constraints. By default, most analyses use a random tree simulated by the inference, which will fulfill all constraints. However, with more complex models or constraints, the simulation process can fail to find a good tree, in which case a valid starting tree needs to be provided by the user.
-- an issue with the initial values of the parameters: if the initial values set in the analysis are very far from plausible, the resulting likelihood of the model will be extremely small, which gets recorded as _-Infinity_ by BEAST2.
+
+-  a bug in the likelihood calculation itself: BEAST2 packages can contain calculation issues which have been undetected so far (especially if they only appear in very specific circumstances), in which case they should be reported to the development team. However, this is unlikely in our case, as the FBD model has been extensively used without issue in previous analyses, and our analysis setup is similar to previous analyses.
+-  an issue with the initial tree: the inference will not start if the provided initial tree is impossible under the specified tree model or doesn't match with the provided MRCA constraints. By default, most analyses use a random tree simulated by the inference, which will fulfill all constraints. However, with more complex models or constraints, the simulation process can fail to find a good tree, in which case a valid starting tree needs to be provided by the user.
+-  an issue with the initial values of the parameters: if the initial values set in the analysis are very far from plausible, the resulting likelihood of the model will be extremely small, which gets recorded as _-Infinity_ by BEAST2.
 
 To inspect the starting values and find the issue, we will first load the file into BEAUti.
 
@@ -384,10 +385,6 @@ Looking at the MCMC output in Tracer, we see that all parameters are starting to
 -  In this tutorial we only considered MCMC performance with respect to exploring parameter space, but we also need to consider tree space. One simple diagnostic for checking convergence and mixing in tree space is to look at the trace plot for the tree likelihood. Poor mixing in the tree likelihood can indicate problems exploring tree space.
 -  It is always a good idea to check your posterior estimates against sampling from the prior.  
 
-
-### Bonus: troubleshooting a complex analysis
-
-In this tutorial, we have used a toy example, but it is important to keep in mind that real analyses may be much more complex.
 
 # Useful Links
 
