@@ -1,19 +1,20 @@
 ---
 author: David A. Rasmussen
-beastversion: 2.7.4
-tracerversion: 1.7.2
+beastversion: 2.7.x
+tracerversion: 1.7.x
 level: Beginner
 title: Troubleshooting
 ---
 
 
+
 # Background
 
-The primary goal of most phylogenetic analyses in BEAST is to infer the posterior distribution of trees and associated model parameters using Markov chain Monte Carlo (MCMC) sampling. In this tutorial, we will learn how to analyze the output of a MCMC analysis in BEAST using Tracer. This program allows us to easily visualize BEAST's output and summarize results. As we will see, we can also use Tracer to troubleshoot some of the most common MCMC problems  encountered in BEAST.
+The primary goal of most phylogenetic analyses in BEAST is to infer the posterior distribution of trees and associated model parameters using Markov chain Monte Carlo (MCMC) sampling. In this tutorial, we will learn how to analyze the output of an MCMC analysis in BEAST2 using Tracer. This program allows us to easily visualize BEAST's output and summarize results. As we will see, we can also use Tracer to troubleshoot some of the most common MCMC problems  encountered in BEAST.
 
-While BEAST's MCMC algorithm is fairly well optimised for phylogenetic inference, problems can arise, especially as the complexity of our data and models increase. A MCMC run may not converge on a stationary target distribution. More commonly, a run might converge but mix poorly - meaning our samples from the posterior are highly autocorrelated and therefore not independent. In these cases, it is often necessary to tune the performance of the MCMC algorithm.
+While BEAST's MCMC algorithm is fairly well optimised for phylogenetic inference, problems can arise, especially as the complexity of our data and models increase. An MCMC run may not converge on a stationary target distribution. More commonly, a run might converge but mix poorly - meaning that our samples from the posterior are highly autocorrelated and therefore not independent. In these cases, it is often necessary to tune the performance of the MCMC algorithm.
 
-In this tutorial, we will consider a relatively simple example where we would like to infer a phylogeny and evolutionary parameters from a small alignment of sequences.  Our job will be to work together to increase the efficiency of the MCMC so we can make BEAST purr...
+In this tutorial, we will consider a relatively simple example where we would like to infer a phylogeny and evolutionary parameters from a small alignment of sequences. Our job will be to work together to increase the efficiency of the MCMC so we can make BEAST purr...
 
 ----
 
@@ -21,7 +22,7 @@ In this tutorial, we will consider a relatively simple example where we would li
 
 ### BEAST2 - Bayesian Evolutionary Analysis Sampling Trees 2
 
-BEAST2 ([http://www.beast2.org](http://www.beast2.org)) is a free software package for Bayesian evolutionary analysis of molecular sequences using MCMC and strictly oriented toward inference using rooted, time-measured phylogenetic trees. This tutorial is written for BEAST v{{ page.beastversion }} {% cite BEAST2book2014 --file Troubleshooting/master-refs %}. 
+BEAST2 ([http://www.beast2.org](http://www.beast2.org)) is a free software package for Bayesian evolutionary analysis of molecular sequences using MCMC and strictly oriented toward inference using rooted, time-measured phylogenetic trees. This tutorial is written for BEAST v{{ page.beastversion }} {% cite Bouckaert2014  Bouckaert2019 --file Introduction-to-BEAST2/master-refs %}. 
 
 
 ### BEAUti2 - Bayesian Evolutionary Analysis Utility
@@ -33,7 +34,8 @@ Both BEAST2 and BEAUti2 are Java programs, which means that the exact same code 
 
 ### Tracer
 
-Tracer ([https://github.com/beast-dev/tracer/releases/tag/v1.7.2](https://github.com/beast-dev/tracer/releases/tag/v1.7.2)) is used to summarise the posterior estimates of the various parameters sampled by the Markov Chain. This program can be used for visual inspection and to assess convergence. It helps to quickly view median estimates and 95% highest posterior density intervals of the parameters, and calculates the effective sample sizes (ESS) of parameters. It can also be used to investigate potential parameter correlations. We will be using Tracer v{{ page.tracerversion }}.
+Tracer ([http://beast.community/tracer](http://beast.community/tracer)) is used to summarise the posterior estimates of the various parameters sampled by the Markov Chain. This program can be used for visual inspection and to assess convergence. It helps to quickly view median estimates and 95% highest posterior density intervals of the parameters, and calculates the effective sample sizes (ESS) of parameters. It can also be used to investigate potential parameter correlations. We will be using Tracer v{{ page.tracerversion }}.
+
 
 
 ----
@@ -48,7 +50,7 @@ Tracer ([https://github.com/beast-dev/tracer/releases/tag/v1.7.2](https://github
 To get started, I have generated a XML file that we can run our phylogenetic analysis in BEAST.
 
 
-> Download the first BEAST input file `tutorial_run1.xml`
+> Download the first **BEAST2** input file `tutorial_run1.xml`
 > 
 
 The XML contains an alignment of 36 randomly simulated DNA sequences. 
@@ -59,7 +61,7 @@ The XML contains an alignment of 36 randomly simulated DNA sequences.
 While we can open the XML file in any standard text editor, BEAUTi offers an easy way to inspect the different elements of the analysis: 
 
 
-> Open BEAUti and load in the `tutorial_run1.xml` file by navigating to **File > Load**.
+> Open **BEAUti** and load in the `tutorial_run1.xml` file by navigating to **File > Load**.
 > 
 
 By navigating between the different tabs at the top of the application window, we can inspect the data and each element of the analysis. For example, in the **Site Model** panel, we can see that we are fitting a GTR substitution model with no gamma rate heterogeneity ([Figure 1](#fig:beauti_run1)).
@@ -78,7 +80,7 @@ By navigating between the different tabs at the top of the application window, w
 We are now ready to run our first analysis in BEAST.
 
 
-> Open BEAST and choose `tutorial_run1.xml` as the BEAST XML file. Then click **Run**.
+> Open **BEAST2** and choose `tutorial_run1.xml` as the Input file. Then click **Run**.
 > 
 
 <figure>
@@ -94,7 +96,7 @@ Since we are only running 200,000 iterations, the MCMC should finish running in 
 ### Visualizing BEAST's output in Tracer
 
 
-> Open Tracer and navigate to **File > Import Trace File**, then open `tutorial_run1.log`
+> Open **Tracer** and navigate to **File > Import Trace File**, then open `tutorial_run1.log` **or** simply drag and drop the file into the **Tracer** window.
 > 
 
 The results of your run will look similar, but not necessarily identical, to my results shown in [Figure 2](#fig:beast_run1).
@@ -106,7 +108,7 @@ By selecting a parameter in the left panel and then clicking on the **Trace** ta
 <figure>
 	<a id="fig:tracer_run1"></a>
 	<img style="width:80.0%;" src="figures/tracer_run1.png" alt="">
-	<figcaption>Figure 3: A trace plot for the **clockRate** parameter</figcaption>
+	<figcaption>Figure 3: A trace plot for the clockRate parameter</figcaption>
 </figure>
 <br>
 
@@ -116,7 +118,7 @@ We can also see our posterior estimates for each parameter by clicking on the **
 <figure>
 	<a id="fig:tracer_run1_ests"></a>
 	<img style="width:80.0%;" src="figures/tracer_run1_ests.png" alt="">
-	<figcaption>Figure 4: Posterior estimates of the **clockRate** in Tracer.</figcaption>
+	<figcaption>Figure 4: Posterior estimates of the clockRate in Tracer.</figcaption>
 </figure>
 <br>
 
@@ -127,11 +129,12 @@ We can also see our posterior estimates for each parameter by clicking on the **
 By checking the ESS, trace plots and parameter estimates, we got the picture that none of our parameters in Run 1 mixed well. In this case, the simplest thing to try is to rerun the MCMC for more iterations.
 
 
-> Load the `tutorial_run1.xml` back into BEAUti using **File > Load**. Navigate to the MCMC panel and increase the chain length to 1 million. When done, navigate **File > Save As** and save as `tutorial_run2.xml`.
+> Load `tutorial_run1.xml` back into **BEAUti** using **File > Load**. Navigate to the MCMC panel and increase the chain length to 1 million. When done, navigate **File > Save As** and save as `tutorial_run2.xml`.
 > 
 
+Note that we didn't need to change the file names fo the **tracelog** or **treelog**, since they are by default set to `$(filebase).log` and `$(filebase)-$(tree).trees`. When running the analysis `$(filebase)` will be replaced by the name of the XML file and `$(tree)` by the name of tree in the analysis (in this case the name of the alignment).
 
-> Run the `tutorial_run2.xml` file in BEAST as we did before. When done, open the `tutorial_run2.log` in Tracer.
+> Run the `tutorial_run2.xml` file in **BEAST2** as we did before. When done, open `tutorial_run2.log` in **Tracer**.
 > 
 
 
@@ -140,7 +143,7 @@ Looking at the MCMC output in Tracer, we see that increasing the chain length di
 <figure>
 	<a id="fig:tracer_run2"></a>
 	<img style="width:80.0%;" src="figures/tracer_run2.png" alt="">
-	<figcaption>Figure 5: A trace plot for the **clockRate** parameter</figcaption>
+	<figcaption>Figure 5: A trace plot for the clockRate parameter</figcaption>
 </figure>
 <br>
 
@@ -151,7 +154,7 @@ Looking at the MCMC output in Tracer, we see that increasing the chain length di
 If one parameter in particular is not converging or mixing well, we can try to tweak that parameter's operator(s). Remember that BEAST's operators control what new parameter values are proposed at each MCMC iteration and how these proposals are made (i.e. the proposal distribution). Since the **clockRate** parameter was not mixing well in Run 2, we will try increasing the frequency at which new **clockRates** are proposed.
 
 
-> Load the `tutorial_run2.xml` back into BEAUti and select `View > Show Operators panel`. This will bring up a new panel showing all the operators in use ([Figure 6](#fig:beauti_run3)). In the box to the right of `Adaptable Sampler: clockRate.c:seqs  Scale substitution rate of partition c:seqs`, change the value from **0.05** to **3.0**. When done, save as `tutorial_run3.xml`.
+> Load `tutorial_run2.xml` back into **BEAUti** and select **View > Show Operators panel**. This will bring up a new panel showing all the operators in use ([Figure 6](#fig:beauti_run3)). In the box to the right of `Adaptable Sampler: clockRate.c:seqs  Scale substitution rate of partition c:seqs`, change the value from **0.05** to **3.0**. When done, save as `tutorial_run3.xml`.
 > 
 
 <figure>
@@ -166,7 +169,7 @@ So, what just happened? We increased the weight of the scale operator on the **c
 
 
 
-> Run the `tutorial_run3.xml` in BEAST and then open the `tutorial_run3.log` in Tracer.
+> Run `tutorial_run3.xml` in **BEAST2** and then open `tutorial_run3.log` in **Tracer**.
 > 
 
 We can see that optimizing the operator dramatically improves mixing for the **clockRate** ([Figure 7](#fig:tracer_run3)).
@@ -174,7 +177,7 @@ We can see that optimizing the operator dramatically improves mixing for the **c
 <figure>
 	<a id="fig:tracer_run3"></a>
 	<img style="width:80.0%;" src="figures/tracer_run3.png" alt="">
-	<figcaption>Figure 7: A trace plot for the **clockRate** parameter</figcaption>
+	<figcaption>Figure 7: A trace plot for the clockRate parameter</figcaption>
 </figure>
 <br>
  
@@ -184,32 +187,32 @@ One thing to keep in mind is that BEAST is using MCMC to explore a multidimensio
 <figure>
 	<a id="fig:tracer_run3Joint"></a>
 	<img style="width:80.0%;" src="figures/tracer_run3Joint.png" alt="">
-	<figcaption>Figure 8: The joint posterior distribution of **Tree.height** and **clockRate**</figcaption>
+	<figcaption>Figure 8: The joint posterior distribution of Tree.height and clockRate</figcaption>
 </figure>
 <br>
 
 
 
-### Run 4: Adding an upDown operator
+### Run 4: Adding an UpDown operator
 
 The easiest way to improve MCMC performance when two parameters are highly negatively correlated is to add an **UpDown** operator. This operator scales one parameter up while scaling the other parameter down. If two parameters are highly positively correlated we can also use this operator to scale both parameters in the same direction, up or down. 
 
 
-> Load the `tutorial_run3.xml` back into BEAUti and select `View > Show Operators panel`. In the box to the right of `Adaptable Sampler: clockRate.c:seqs Tree.t:seqs  Scale up substitution rate c:seqs and scale down tree t:seqs`, change the weight on the UpDown operator from **0.0** to **3.0**. When done, save as `tutorial_run4.xml`.
+> Load `tutorial_run3.xml` back into **BEAUti** and select **View > Show Operators panel** as before. In the box to the right of `Adaptable Sampler: clockRate.c:seqs Tree.t:seqs  Scale up substitution rate c:seqs and scale down tree t:seqs`, change the weight on the **Bactrian UpDown** operator from **0.0** to **3.0**. When done, save as `tutorial_run4.xml`.
 > 
 
-We just added an **UpDown** operator on the **clockRate** and the **Tree.height**. The fact that these two parameters are highly negatively correlated makes perfect sense. An increase in the **clockRate** means that less time is needed for substitutions to accumulate along branches; meaning branches can be shorter and yet still explain the same amount of accumulated evolutionary change in the sequence data. If all branches in the tree become shorter, then the total **Tree.height** will also decrease. Thus it makes sense to include an **UpDown** operator on **clockRate** and **Tree.height**. In fact, by default BEAUTi includes this operator. However, I disabled it in the original XML file by setting the weight on this operator to zero for the purpose of illustration.
+We just added an **UpDown** operator on the **clockRate** and the **Tree.height** parameters. The fact that these two parameters are highly negatively correlated makes perfect sense. An increase in the **clockRate** means that less time is needed for substitutions to accumulate along branches; meaning branches can be shorter and yet still explain the same amount of accumulated evolutionary change in the sequence data. If all branches in the tree become shorter, then the total **Tree.height** will also decrease. Thus, it makes sense to include an **UpDown** operator on **clockRate** and **Tree.height**. In fact, by default BEAUTi includes this operator. However, I disabled it in the original XML file by setting the weight on this operator to zero for the purpose of illustration.
 
 
-> Run the `tutorial_run4.xml` in BEAST and then open the `tutorial_run4.log` in Tracer.
+> Run `tutorial_run4.xml` in **BEAST2** and then open `tutorial_run4.log` in **Tracer**.
 > 
 
-Looking at the MCMC output in Tracer, we see that all parameters are starting to mix well with relatively high ESS values. Personally, I would probably want to run one final MCMC for several million iterations just to be on the safe side, but this can easily be done by adding more iterations to the chain as we did for Run 2.  Alternatively, multiple different MCMC runs can be combined using the program LogCombiner that comes packaged with BEAST. This may be better than running one single long analysis, as it allows us to be sure independent runs are converging on similar parameters.  
+Looking at the MCMC output in Tracer, we see that all parameters are starting to mix well with relatively high ESS values. Personally, I would probably want to run one final MCMC for several million iterations just to be on the safe side, but this can easily be done by adding more iterations to the chain as we did for Run 2.  Alternatively, multiple different MCMC runs can be combined using the program LogCombiner that comes packaged with BEAST. This may be better than running one single long analysis, as it allows us to be sure independent runs are converging on posterior parameter values and increases our confidence that we are sampling from the equilibrium distribution.  
 
 <figure>
 	<a id="fig:tracer_run4"></a>
 	<img style="width:80.0%;" src="figures/tracer_run4.png" alt="">
-	<figcaption>Figure 9: A trace plot for the **clockRate** parameter</figcaption>
+	<figcaption>Figure 9: A trace plot for the clockRate parameter</figcaption>
 </figure>
 <br>
 
