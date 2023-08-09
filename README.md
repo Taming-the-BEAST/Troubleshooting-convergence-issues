@@ -22,7 +22,7 @@ In this tutorial, we will consider a relatively simple example where we would li
 
 ### BEAST2 - Bayesian Evolutionary Analysis Sampling Trees 2
 
-BEAST2 ([http://www.beast2.org](http://www.beast2.org)) is a free software package for Bayesian evolutionary analysis of molecular sequences using MCMC and strictly oriented toward inference using rooted, time-measured phylogenetic trees. This tutorial is written for BEAST v{{ page.beastversion }} {% cite Bouckaert2014  Bouckaert2019 --file Introduction-to-BEAST2/master-refs %}. 
+BEAST2 ([http://www.beast2.org](http://www.beast2.org)) is a free software package for Bayesian evolutionary analysis of molecular sequences using MCMC and strictly oriented toward inference using rooted, time-measured phylogenetic trees. This tutorial is written for BEAST v{{ page.beastversion }} {% cite Bouckaert2014  Bouckaert2019 --file Troubleshooting-convergence-issues/master-refs %}. 
 
 
 ### BEAUti2 - Bayesian Evolutionary Analysis Utility
@@ -230,7 +230,7 @@ Looking at the MCMC output in Tracer, we see that all parameters are starting to
 # Useful Links
 
 
--  [*Bayesian Evolutionary Analysis with BEAST 2; chapter 10.*](http://www.beast2.org/book.html)  {% cite BEAST2book2014 --file Troubleshooting/master-refs %}
+-  [*Bayesian Evolutionary Analysis with BEAST 2; chapter 10.*](http://www.beast2.org/book.html)  {% cite BEAST2book2014 --file Troubleshooting-convergence-issues/master-refs %}
 
 
 
@@ -238,6 +238,6 @@ Looking at the MCMC output in Tracer, we see that all parameters are starting to
 
 # Relevant References
 
-{% bibliography --cited --file Troubleshooting/master-refs %}
+{% bibliography --cited --file Troubleshooting-convergence-issues/master-refs %}
 
 
