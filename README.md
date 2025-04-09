@@ -217,13 +217,115 @@ Looking at the MCMC output in Tracer, we see that all parameters are starting to
 <br>
 
 
-
 ### Further things to keep in mind
 
 
 -  The number of MCMC iterations needed to achieve a reasonable posterior sample in this tutorial was quite small. With larger alignments, much longer chains may be needed.
 -  In this tutorial we only considered MCMC performance with respect to exploring parameter space, but we also need to consider tree space. One simple diagnostic for checking convergence and mixing in tree space is to look at the trace plot for the tree likelihood. Poor mixing in the tree likelihood can indicate problems exploring tree space.
 -  It is always a good idea to check your posterior estimates against sampling from the prior.  
+
+
+# Practical: Using a starting tree
+
+By default, BEAST2 generates a random starting tree for you at the beginning of the analysis. While this is helpful, the random starting tree can be quite far from the phylogenies with high posterior values. Using a good initial tree, for instance a phylogeny which was generated during a previous analysis of the dataset, can be a good way to make the burn-in phase shorter and accelerate the convergence of our analysis. Here we use a primates dataset with only 12 sequences as an example, but providing a starting tree will generally be more effective for larger phylogenies and more complex analyses.
+
+## The Data
+
+As in the previous section, we have already generated an XML file containing all the details of our analysis.
+
+> Download the first **BEAST2** input file `primates_run.xml`.
+> 
+
+## Inspecting the XML file in BEAUti
+
+While we can open the XML file in any standard text editor, BEAUTi offers an easy way to inspect the different elements of the analysis: 
+
+
+> Open **BEAUti** and load in the `primates_run.xml` file by navigating to **File > Load**.
+> 
+
+By default, the initial value for the tree does not appear in BEAUti, so our first step is to make this initial tree visible.
+
+> In **BEAUti**, navigate to **View > Show Starting tree panel**.
+> A new tab appears in the interface, which should look like [Figure 10](#fig:tree_panel).
+>
+
+<figure>
+	<a id="fig:tree_panel"></a>
+	<img style="width:80.0%;" src="figures/ape_tree_panel.png" alt="">
+	<figcaption>Figure 10: The Starting tree panel showing the default random tree.</figcaption>
+</figure>
+<br>
+
+## Setting an initial tree
+
+Our first step is to select a newick tree as our starting tree, which will allow us to input directly our initial tree.
+
+> Click on the dropdown menu indicating **Random Tree** and select the option **Newick Tree**.
+>
+
+We now need to provide our initial tree in Newick format.
+
+> Download the first initial tree file `primates_tree.tre`.
+> Copy and paste the tree from the file into the **Newick** input field.
+> 
+
+Note that there are several important options in this menu, which you need to consider carefully as they can modify your input tree:
+ + **Adjust Tip Heights**: if tip dates are not provided for your sequences and this option is checked, the ages of all the tips in your tree will be adjusted to 0 (i.e. the present). If you have a tree with heterochronous samples or fossils and you did not provide the tip ages (in the **Tip ages** panel), you need to **uncheck** this option, otherwise your tree will be changed to an ultrametric phylogeny.
+ + **Binarize Multifurcations**: this option will remove any polytomies present in your initial tree and resolve them as a series of random bifurcations. Since most tree models implemented in BEAST2 cannot handle polytomies, this option is set to **true** by default.
+ + **Adjust Tree Node Heights**: this option will adjust branch lengths which are negative or zero to small positive values. **Sampled ancestors** are generally encoded as tips at the end of branches with length zero, so you need to **uncheck** this option if you want to provide an initial tree with sampled ancestors.
+ 
+Our analysis only contains extant species, and our tree has no polytomies so we will leave all options to their default. The final setup looks like [Figure 11](#fig:newick_tree_panel).
+
+<figure>
+	<a id="fig:newick_tree_panel"></a>
+	<img style="width:80.0%;" src="figures/ape_newick_tree_panel.png" alt="">
+	<figcaption>Figure 10: The Starting tree panel showing our Newick initial tree.</figcaption>
+</figure>
+<br>
+
+## Running with an initial tree
+
+We can now run our updated analysis.
+
+> Save the analysis as `primates_run_newick.xml`.
+> Open **BEAST2** and choose `primates_run_newick.xml` as the Input file. Then click **Run**.
+> 
+
+On this small example, we will not see a strong difference in performance from adding an initial tree. However, initial trees can be helpful for larger and more complex inferences to converge.
+
+## Common issues with initial trees
+
+A frequent issue with using initial tree is that **BEAST2** expects a dated tree, i.e. a tree with branch lengths in units of time, whereas initial trees are often generated using a maximum likelihood software such as **IQ-TREE**, which will output a tree with branch lengths in units of number of substitutions. This is exactly the case in our example, and if we plot the primates tree provided above we will notice this very easily. For instance, all our samples come from the present, but our example tree is not ultrametric.
+
+This was not an issue in our earlier inference because **BEAST2** was able to correct the tip ages (with the **Adjust Tip Heights** option) and we had no other time calibration points. However, in a real analysis we will likely have several calibrations to help calibrate our molecular clock. Let us check what happens when we add a root calibration at the root of the tree.
+
+> Download the second **BEAST2** input file `primates_run_newick_root.xml`.
+> Open **BEAST2** and choose `primates_run_newick_root.xml` as the Input file. Then click **Run**.
+> 
+
+Our analysis does not start, and by looking at the error message in [Figure 12](#fig:error_root) we can see that our root calibration has probability **-Infinity**. This is because the root calibration that we have set has an **offset** of **20 My**, meaning that the root age has to be above that value. On the other hand, the initial tree we have provided has a root age of 0.887, which is completely incompatible with the calibration.
+
+We can solve this issue by scaling our initial tree so that the root age is increased. Since our root age has to be greater than 20, we need a scaling factor of at least 20/0.887 = 22.55 to have a tree which is compatible with the calibration.
+
+> Open **BEAUti** and load in the `primates_run_newick_root.xml` file by navigating to **File > Load**.
+> As before, navigate to **View > Show Starting tree panel**.
+> Set the **Scale** to **25.0**.
+>
+
+We can now test that our updated analysis runs correctly.
+
+> Save the analysis as `primates_run_newick_root_scaled.xml`.
+> Open **BEAST2** and choose `primates_run_newick_root_scaled.xml` as the Input file. Then click **Run**.
+> 
+
+Unfortunately, the **Scale** parameter is applied to the whole tree, and in analyses with many different calibration points it is not always possible to find a scale factor which is compatible with all calibrations, especially if some calibrations have both a minimum and a maximum age. For instance, let us see what happens if we add a second calibration point to our analysis.
+
+> Download the third **BEAST2** input file `primates_run_newick_calibrated_scaled.xml`.
+> Open **BEAST2** and choose `primates_run_newick_calibrated_scaled.xml` as the Input file. Then click **Run**.
+> 
+
+Again our analysis does not start, and by looking at the error message in [Figure 13](#fig:error_calib) we can see that our second calibration **human_pan** has probability **-Infinity**, which indicates that it is incompatible with the initial tree. In this situation, we would need to either use a dated tree as our starting value for the inference, or manually adjust the tree so that all calibration nodes have an age which is compatible with the calibrations set in the analysis.
 
 
 
