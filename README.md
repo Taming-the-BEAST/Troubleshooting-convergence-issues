@@ -252,7 +252,7 @@ By default, the initial value for the tree does not appear in BEAUti, so our fir
 
 <figure>
 	<a id="fig:tree_panel"></a>
-	<img style="width:80.0%;" src="figures/ape_tree_panel.png" alt="">
+	<img style="width:80.0%;" src="figures/beauti_tree_panel.png" alt="">
 	<figcaption>Figure 10: The Starting tree panel showing the default random tree.</figcaption>
 </figure>
 <br>
@@ -279,8 +279,8 @@ Our analysis only contains extant species, and our tree has no polytomies so we 
 
 <figure>
 	<a id="fig:newick_tree_panel"></a>
-	<img style="width:80.0%;" src="figures/ape_newick_tree_panel.png" alt="">
-	<figcaption>Figure 10: The Starting tree panel showing our Newick initial tree.</figcaption>
+	<img style="width:80.0%;" src="figures/beauti_newick_tree_panel.png" alt="">
+	<figcaption>Figure 11: The Starting tree panel showing our Newick initial tree.</figcaption>
 </figure>
 <br>
 
@@ -292,19 +292,32 @@ We can now run our updated analysis.
 > Open **BEAST2** and choose `primates_run_newick.xml` as the Input file. Then click **Run**.
 > 
 
-On this small example, we will not see a strong difference in performance from adding an initial tree. However, initial trees can be helpful for larger and more complex inferences to converge.
+We can load the log files `primates_run.log` and `primates_run_newick.log` (found in the `Output` section of the tutorial) into **Tracer** to compare both runs. On this small example, the ESS of the run with an initial tree are slightly higher on most parameters than with the random tree, but both runs have converged and we do not see a strong difference in performance from adding an initial tree. However, initial trees can be very helpful for larger and more complex inferences to converge.
 
 ## Common issues with initial trees
 
-A frequent issue with using initial tree is that **BEAST2** expects a dated tree, i.e. a tree with branch lengths in units of time, whereas initial trees are often generated using a maximum likelihood software such as **IQ-TREE**, which will output a tree with branch lengths in units of number of substitutions. This is exactly the case in our example, and if we plot the primates tree provided above we will notice this very easily. For instance, all our samples come from the present, but our example tree is not ultrametric.
+A frequent issue with using an initial tree is that **BEAST2** expects a dated tree, i.e. a tree with branch lengths in units of time, whereas initial trees are often generated using a maximum likelihood software such as **IQ-TREE**, which will output a tree with branch lengths in units of number of substitutions. This is exactly the case in our example, and if we plot the primates tree provided above we will notice this very easily. For instance, all our samples come from the present, but our primates initial tree is not ultrametric.
 
 This was not an issue in our earlier inference because **BEAST2** was able to correct the tip ages (with the **Adjust Tip Heights** option) and we had no other time calibration points. However, in a real analysis we will likely have several calibrations to help calibrate our molecular clock. Let us check what happens when we add a root calibration at the root of the tree.
 
 > Download the second **BEAST2** input file `primates_run_newick_root.xml`.
+> Open **BEAUti** and load in the `primates_run_newick_root.xml` file by navigating to **File > Load**.
+> Check the added root calibration in the **Priors** panel.
+>
+
+We can see here that we have added a distribution on the root node in order to infer a dated tree. Now we can run this analysis.
+
 > Open **BEAST2** and choose `primates_run_newick_root.xml` as the Input file. Then click **Run**.
 > 
 
 Our analysis does not start, and by looking at the error message in [Figure 12](#fig:error_root) we can see that our root calibration has probability **-Infinity**. This is because the root calibration that we have set has an **offset** of **20 My**, meaning that the root age has to be above that value. On the other hand, the initial tree we have provided has a root age of 0.887, which is completely incompatible with the calibration.
+
+<figure>
+	<a id="fig:error_root"></a>
+	<img style="width:80.0%;" src="figures/beast_error_root.png" alt="">
+	<figcaption>Figure 12: The error obtained when running an analysis with a root calibration.</figcaption>
+</figure>
+<br>
 
 We can solve this issue by scaling our initial tree so that the root age is increased. Since our root age has to be greater than 20, we need a scaling factor of at least 20/0.887 = 22.55 to have a tree which is compatible with the calibration.
 
@@ -321,13 +334,24 @@ We can now test that our updated analysis runs correctly.
 
 Unfortunately, the **Scale** parameter is applied to the whole tree, and in analyses with many different calibration points it is not always possible to find a scale factor which is compatible with all calibrations, especially if some calibrations have both a minimum and a maximum age. For instance, let us see what happens if we add a second calibration point to our analysis.
 
-> Download the third **BEAST2** input file `primates_run_newick_calibrated_scaled.xml`.
-> Open **BEAST2** and choose `primates_run_newick_calibrated_scaled.xml` as the Input file. Then click **Run**.
+> Download the third **BEAST2** input file `primates_run_newick_2calib.xml`.
+> Open **BEAUti** and load in the `primates_run_newick_2calib.xml` file by navigating to **File > Load**.
+> Check the two calibrations in the **Priors** panel.
+>
+
+We can see two calibrations in our analysis, one at the root of the tree and one on the human-chimpanzee clade. Now we can run this analysis.
+
+> Open **BEAST2** and choose `primates_run_newick_2calib.xml` as the Input file. Then click **Run**.
 > 
 
 Again our analysis does not start, and by looking at the error message in [Figure 13](#fig:error_calib) we can see that our second calibration **human_pan** has probability **-Infinity**, which indicates that it is incompatible with the initial tree. In this situation, we would need to either use a dated tree as our starting value for the inference, or manually adjust the tree so that all calibration nodes have an age which is compatible with the calibrations set in the analysis.
 
-
+<figure>
+	<a id="fig:error_calib"></a>
+	<img style="width:80.0%;" src="figures/beast_error_calib.png" alt="">
+	<figcaption>Figure 13: The error obtained when running an analysis with two calibration points.</figcaption>
+</figure>
+<br>
 
 # Useful Links
 
