@@ -68,7 +68,7 @@ By navigating between the different tabs at the top of the application window, w
 
 <figure>
 	<a id="fig:beauti_run1"></a>
-	<img style="width:80.0%;" src="figures/beauti_run1.png" alt="">
+	<img style="width:100.0%;" src="figures/beauti_run1.png" alt="">
 	<figcaption>Figure 1: The Site Model panel in BEAUTi</figcaption>
 </figure>
 <br>
@@ -107,7 +107,7 @@ By selecting a parameter in the left panel and then clicking on the **Trace** ta
 
 <figure>
 	<a id="fig:tracer_run1"></a>
-	<img style="width:80.0%;" src="figures/tracer_run1.png" alt="">
+	<img style="width:100.0%;" src="figures/tracer_run1.png" alt="">
 	<figcaption>Figure 3: A trace plot for the clockRate parameter</figcaption>
 </figure>
 <br>
@@ -117,7 +117,7 @@ We can also see our posterior estimates for each parameter by clicking on the **
 
 <figure>
 	<a id="fig:tracer_run1_ests"></a>
-	<img style="width:80.0%;" src="figures/tracer_run1_ests.png" alt="">
+	<img style="width:100.0%;" src="figures/tracer_run1_ests.png" alt="">
 	<figcaption>Figure 4: Posterior estimates of the clockRate in Tracer.</figcaption>
 </figure>
 <br>
@@ -142,7 +142,7 @@ Looking at the MCMC output in Tracer, we see that increasing the chain length di
 
 <figure>
 	<a id="fig:tracer_run2"></a>
-	<img style="width:80.0%;" src="figures/tracer_run2.png" alt="">
+	<img style="width:100.0%;" src="figures/tracer_run2.png" alt="">
 	<figcaption>Figure 5: A trace plot for the clockRate parameter</figcaption>
 </figure>
 <br>
@@ -159,7 +159,7 @@ If one parameter in particular is not converging or mixing well, we can try to t
 
 <figure>
 	<a id="fig:beauti_run3"></a>
-	<img style="width:80.0%;" src="figures/beauti_run3.png" alt="">
+	<img style="width:100.0%;" src="figures/beauti_run3.png" alt="">
 	<figcaption>Figure 6: The Operators panel in BEAUTi</figcaption>
 </figure>
 <br>
@@ -176,7 +176,7 @@ We can see that optimizing the operator dramatically improves mixing for the **c
 
 <figure>
 	<a id="fig:tracer_run3"></a>
-	<img style="width:80.0%;" src="figures/tracer_run3.png" alt="">
+	<img style="width:100.0%;" src="figures/tracer_run3.png" alt="">
 	<figcaption>Figure 7: A trace plot for the clockRate parameter</figcaption>
 </figure>
 <br>
@@ -186,7 +186,7 @@ One thing to keep in mind is that BEAST is using MCMC to explore a multidimensio
 
 <figure>
 	<a id="fig:tracer_run3Joint"></a>
-	<img style="width:80.0%;" src="figures/tracer_run3Joint.png" alt="">
+	<img style="width:100.0%;" src="figures/tracer_run3Joint.png" alt="">
 	<figcaption>Figure 8: The joint posterior distribution of Tree.height and clockRate</figcaption>
 </figure>
 <br>
@@ -211,7 +211,7 @@ Looking at the MCMC output in Tracer, we see that all parameters are starting to
 
 <figure>
 	<a id="fig:tracer_run4"></a>
-	<img style="width:80.0%;" src="figures/tracer_run4.png" alt="">
+	<img style="width:100.0%;" src="figures/tracer_run4.png" alt="">
 	<figcaption>Figure 9: A trace plot for the clockRate parameter</figcaption>
 </figure>
 <br>
@@ -252,7 +252,7 @@ By default, the initial value for the tree does not appear in BEAUti, so our fir
 
 <figure>
 	<a id="fig:tree_panel"></a>
-	<img style="width:80.0%;" src="figures/beauti_tree_panel.png" alt="">
+	<img style="width:100.0%;" src="figures/beauti_tree_panel.png" alt="">
 	<figcaption>Figure 10: The Starting tree panel showing the default random tree.</figcaption>
 </figure>
 <br>
@@ -279,7 +279,7 @@ Our analysis only contains extant species, and our tree has no polytomies so we 
 
 <figure>
 	<a id="fig:newick_tree_panel"></a>
-	<img style="width:80.0%;" src="figures/beauti_newick_tree_panel.png" alt="">
+	<img style="width:100.0%;" src="figures/beauti_newick_tree_panel.png" alt="">
 	<figcaption>Figure 11: The Starting tree panel showing our Newick initial tree.</figcaption>
 </figure>
 <br>
@@ -314,7 +314,7 @@ Our analysis does not start, and by looking at the error message in [Figure 12](
 
 <figure>
 	<a id="fig:error_root"></a>
-	<img style="width:80.0%;" src="figures/beast_error_root.png" alt="">
+	<img style="width:100.0%;" src="figures/beast_error_root.png" alt="">
 	<figcaption>Figure 12: The error obtained when running an analysis with a root calibration.</figcaption>
 </figure>
 <br>
@@ -348,7 +348,7 @@ Again our analysis does not start, and by looking at the error message in [Figur
 
 <figure>
 	<a id="fig:error_calib"></a>
-	<img style="width:80.0%;" src="figures/beast_error_calib.png" alt="">
+	<img style="width:100.0%;" src="figures/beast_error_calib.png" alt="">
 	<figcaption>Figure 13: The error obtained when running an analysis with two calibration points.</figcaption>
 </figure>
 <br>
