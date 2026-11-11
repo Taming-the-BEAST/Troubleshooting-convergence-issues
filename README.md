@@ -1,9 +1,15 @@
 ---
 author: David A. Rasmussen
-beastversion: 2.7.x
 tracerversion: 1.7.x
-level: Beginner
 title: Troubleshooting-convergence-issues
+beastversion_tutorial: 2.7.x
+workflow: Troubleshooting
+status: current
+keywords:
+- convergence
+- MCMC
+- molecular clock
+- parameter estimation
 ---
 
 
